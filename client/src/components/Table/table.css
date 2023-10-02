@@ -1,0 +1,30 @@
+.table-container table {
+  table-layout: fixed;
+}
+
+.table-row .row-item {
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis for long text */
+}
+
+.table-row .row-item.long-column {
+  width: 200px; /* Adjust the width as needed */
+}
+
+/* .table-container {
+  overflow-x: auto;
+} */
+
+.row-item.long-column {
+  width: 200px; /* Adjust the width as needed */
+}
+
+.table-container {
+  overflow-x: auto; /* Add horizontal scrolling if necessary */
+  max-width: 100%; /* Set a maximum width */
+}
+
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens */
+}

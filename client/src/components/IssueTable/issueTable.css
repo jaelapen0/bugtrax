@@ -23,8 +23,17 @@ th {
   background-color: #646cff;
 }
 
+tbody{
+  
+  padding: 5px;
+}
+
 td {
   background-color: #9ca0f0;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-bottom: 10px;
 }
 
 form {
@@ -39,4 +48,116 @@ form td:last-child {
 
 form * {
   font-size: 28px;
+}
+
+.status-open{
+  background-color: green;
+}
+
+.status-closed{
+  background-color: grey;
+}
+
+.priority-high{
+  background-color: red;
+}
+
+.priority-normal{
+  background-color: orange;
+}
+
+.priority-low{
+  background-color: green;
+}
+
+
+
+
+/* just a reset of the css */
+body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica';
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+.table-container {
+  display: flex;
+  flex-flow: column nowrap;
+  background-color: white;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 4px;
+  border: 1px solid #DADADA;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, .08);
+}
+
+.table-row {
+  display: flex;
+  flex-flow: row nowrap;
+  /* width: 90%; */
+  border-bottom: 1px solid #dadada;
+}
+
+.table-row:hover {
+  cursor: pointer; 
+  background-color: #F0F0F0; 
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, .08);
+}
+
+.heading {
+  background-color: #ececec;
+  color: #3e3e3e;
+  font-weight: bold;
+}
+
+.row-item {
+  display: flex;
+  width: 20px;
+  flex: 1;
+  font-size: 14px;
+  padding: 8px 0;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none;
+  margin: 1px
+}
+
+.row-item:hover {
+  /* cursor: pointer;
+  background-color: #F0F0F0; */
+/*   box-shadow: 0px 1px 4px rgba(0, 0, 0, .08); */
+}
+
+.row-sub-container {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1;
+}
+
+.row-sub-container .row-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #dadada;
+}
+
+.table-row:last-child,
+.row-sub-container .row-item:last-child {
+  border-bottom: 0;
+}
+
+a:visited {
+  color: inherit;
+  text-decoration: none;
 }

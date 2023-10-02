@@ -1,7 +1,8 @@
 import React, { FC, useState, useEffect } from "react";
 import IssueTable from "../components/IssueTable/IssueTable";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { AddIssueForm } from "../components/AddIssueForm/AddIssueForm";
+import { fetchAllIssues } from "../utils/IssueUtils";
 
 type Issue = {
   title: string;
@@ -15,22 +16,11 @@ const Issues: FC = () => {
   const [issues, setIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
-    fetchAllIssues();
-  }, []);
-
-  const fetchAllIssues = async () => {
-    try {
-      const res = await axios.get("http://localhost:8000/api/issues", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        },
-      });
+    fetchAllIssues()
+    .then((res ) => {
       setIssues(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    })
+  }, []); 
 
   return (
     <div className="issues-container">
@@ -38,7 +28,7 @@ const Issues: FC = () => {
         <h2 className="header-text">All Issues</h2>
       </header>
       <div className="add-issue-container">
-        <AddIssueForm />
+        <AddIssueForm issues={issues}  />
       </div>
       <div className="issues-table-container">
         <IssueTable issues={issues} />

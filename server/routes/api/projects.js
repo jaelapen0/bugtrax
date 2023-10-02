@@ -24,7 +24,18 @@ router.get("/", async (req, res) => {
 // Get Project by ID
 router.get("/:id", async (req, res) => {
   try {
-    const projectFound = await Project.findById(req.params.id);
+    // const issues = await Issue.find().populate("project").exec();
+    // const projectFound = await Project.findById(req.params.id).populate("issues").exec();
+
+    const projectFound = await Project.findById(req.params.id)
+    .populate({
+      path: 'issues',
+      populate: [
+        { path: 'assignedUser' }, // Populate the assignedUser field
+        { path: 'reportedUser' }, // Populate the reportedUser field
+      ],
+    })
+  .exec();
     return res.status(200).json(projectFound);
   } catch (err) {
     res.status(400).json({ error: err.message });

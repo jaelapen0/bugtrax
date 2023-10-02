@@ -17,3 +17,35 @@ export const getIssues = async (routeName: String) => {
     console.log(err);
   }
 };
+
+export const fetchAllIssues = async () => {
+  try {
+    const res = await axios.get("http://localhost:8000/api/issues", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      },
+    });
+    return res;
+    
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+export const fetchIssue = async (issue_id: string) => {
+  try {
+    
+    const res = await axios.get(`http://localhost:8000/api/issues/${issue_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      },
+    });
+    return res;
+    
+  } catch (err) {
+    console.log(err);
+  }
+};

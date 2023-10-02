@@ -7,12 +7,17 @@
   height: 45px;
   margin-bottom: 10px;
   padding-top: 2px;
-  top: 0;
+  top: -4px;
   z-index: 2;
+  left: -30px;
+  right: -20px;
   padding-bottom: 7px;
   margin-left: 27px;
   margin-top: 4px;
   margin-right: 20px;
+  background-color: white;
+  border-bottom: 1px solid grey;
+  box-shadow: 2px 5px 4px 2px rgb(241, 238, 238);
 }
 
 .nav-list {

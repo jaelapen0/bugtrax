@@ -35,6 +35,8 @@ router.get("/", async (req, res) => {
 // Get Issue by ID
 router.get("/:id", async (req, res) => {
   try {
+
+    debugger
     const issue = await Issue.findById(req.params.id);
     return res.status(200).json(issue);
   } catch (err) {

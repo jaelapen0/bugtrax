@@ -1,0 +1,69 @@
+import React, { FC } from "react";
+import "./issueTable.css";
+import { Link } from "react-router-dom";
+
+// interface Issue {
+//   _id: string;
+//   title: string;
+//   description: string;
+//   status: string;
+//   priority: string;
+//   project: {
+//     _id: string;
+//     name: string;
+//   };
+//   createdAt: string;
+//   reportedUser: string;
+//   assignedUser: string;
+// };
+
+const IssueTable: FC = ({ issues }: any) => {
+  return (
+    <div className="issues-table">
+      {/* <p>{issues[0]}</p> */}
+      <table className="all-issues">
+        <thead className="table-head">
+          <tr>
+            <th>Issue</th>
+            <th>ID #</th>
+            <th>Project</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Created At</th>
+            <th>Created By</th>
+            <th>Assigned To</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody className="table-body">
+          {issues.map((issue : object) => (
+           
+            <tr key={issue._id}>
+              
+                          <td>{<Link
+              to={`/issues/${issue._id}`}
+              // style={{ textDecoration: "none" }}
+             
+            >{issue.title}</Link>}</td>
+              <td>{issue._id}</td>
+              {/* REMOVE TERNARY ONCE WE FIX DB AND WORKFLOW */}
+              {issue.project ? (
+                <td>{issue.project.name}</td>
+              ) : (
+                <td>Project XXX</td>
+              )}
+              <td className={`status-${issue.status.toLowerCase()}`}> {issue.status}</td>
+              <td className={`priority-${issue.priority.toLowerCase()}`}>{issue.priority}</td>
+              <td>{issue.createdAt}</td>
+              <td>{issue.reportedUser}</td>
+              <td>{issue.assignedUser}</td>
+              <td></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default IssueTable;
