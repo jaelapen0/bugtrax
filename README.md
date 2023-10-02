@@ -12,4 +12,4 @@
 ### Workflow w/Organizations
 
 1. Home page 0 not logged in
-2. After login - user is directed 
+2. After login - user is directed # bugtrax
