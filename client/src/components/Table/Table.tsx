@@ -38,7 +38,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, columns, context }) => {
     setSortConfig({ key, direction });
   };
 
-
+  debugger;
   return (
     <div className="issues-table">
       <div className="main-container">
@@ -57,6 +57,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, columns, context }) => {
           {data.map((item) => (
             <Link to={`/${context}/${item._id}`} className="table-row" key={item._id}>
               {columns.map((column, index) => (
+       
                 <div className={`row-item ${typeof column.className === 'function' ? column.className(item) : column.className}`} key={index}>
                   {column.render ? column.render(item) : item[column.field]}
                 </div>

@@ -5,6 +5,7 @@ import axios from "axios";
 const Issue = (props: any) => {
   const [formData, setFormData] = useState({
   })
+  const [edit, setEdit] = useState(false);
   const url = window.location.href.split('/')
   const id = url[url.length-1]
 
@@ -53,28 +54,43 @@ const Issue = (props: any) => {
   debugger
   return (
     <div>Issue
-      {issue._id ? 
-          
+      {issue._id ?    
           <div className="issue-container"> 
-            
-             <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input id="email" type="text" />
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <input id="password" type="password" />
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-            <h1>Issue title: <span contentEditable="true" onChange={handleChange}> {issue.title}</span></h1>
-            <p > Description <span contentEditable="true"> {issue.description}</span> </p>
-            <p  onClick={handleChange}> Status {issue.status}</p>
-            <p> Priority {issue.priority}</p>
-            <p> Project {issue.project.name}</p>
-            <p> Created At {issue.createdAt}</p>
-            <p> Reported User {issue.reportedUser}</p>
+            <div className="issue-mamin">
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <input id="email" type="text" />
+                </div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <input id="email" type="text" />
+                </div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <input id="email" type="text" />
+                </div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <input id="email" type="text" />
+                </div>
+                <div>
+                  <label htmlFor="password">Password</label>
+                  <input id="password" type="password" />
+                </div>
+                <button type="submit">Submit</button>
+              </form>
+              <h1>Issue title: <span contentEditable="true" onChange={handleChange}> {issue.title}</span></h1>
+              <p > Description <span contentEditable="true"> {issue.description}</span> </p>
+              <p  onClick={handleChange}> Status {issue.status}</p>
+              <p> Priority {issue.priority}</p>
+              <p> Project {issue.project?.name}</p>
+              <p> Created At {issue.createdAt}</p>
+              <p> Reported User {issue.reportedUser}</p>
+            </div>
+            <div className="issue-comments">
+
+            </div>
           </div> : <></> }
     </div>
   )

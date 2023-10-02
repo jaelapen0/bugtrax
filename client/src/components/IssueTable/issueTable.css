@@ -108,6 +108,9 @@ body {
   flex-flow: row nowrap;
   /* width: 90%; */
   border-bottom: 1px solid #dadada;
+  text-decoration: none;
+  color: black;
+  
 }
 
 .table-row:hover {
@@ -159,5 +162,9 @@ body {
 
 a:visited {
   color: inherit;
+  text-decoration: none;
+}
+
+.no-underline {
   text-decoration: none;
 }
