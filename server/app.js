@@ -34,9 +34,11 @@ import { User } from "./models/User.js";
 // ROUTES
 import projectRoutes from "./routes/api/projects.js";
 import issueRoutes from "./routes/api/issues.js";
+import userRoutes from "./routes/api/users.js";
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/issues", issueRoutes);
+app.use("/api/users", userRoutes);
 
 // AUTH ROUTE
 app.get("/protected", auth, (req, res) => {

@@ -81,3 +81,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+
+issue-main{
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldset{
+  border: none;
+}

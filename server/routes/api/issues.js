@@ -25,7 +25,13 @@ import User from "../../models/User.js";
 // GET ALL ISSUES 2
 router.get("/", async (req, res) => {
   try {
-    const issues = await Issue.find().populate("project").exec();
+    
+    const issues = 
+    await Issue.find()
+    .populate("project")
+    .populate("assignedUser")
+    .populate("reportedUser")
+    .exec();
     return res.status(200).json(issues);
   } catch (err) {
     return res.status(400).json({ error: err.message });
@@ -37,7 +43,12 @@ router.get("/:id", async (req, res) => {
   try {
 
     debugger
-    const issue = await Issue.findById(req.params.id);
+    const issue = await Issue.findOne({_id: req.params.id})
+    .populate("project")
+    .populate("assignedUser")
+    .populate("reportedUser")
+    .exec();
+    debugger
     return res.status(200).json(issue);
   } catch (err) {
     console.log(`${err}`);

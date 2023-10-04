@@ -2,13 +2,9 @@ import React, { useState, ChangeEvent, useEffect, FC, FormEvent } from "react";
 import axios from "axios";
 import { fetchProjects } from "../../utils/ProjectsUtils";
 import { Link, useNavigate, redirect } from "react-router-dom";
+import { project } from "../../types/ProjectType";
 // import { useHistory } from 'react-router-dom';
 
-// THESE TYPES WILL NEED TO BE FIXED - INTERFACES??
-type project = {
-  name: string;
-  _id: string;
-};
 
 export const AddIssueForm: FC = () => {
   // GET CURRENT USER's ID - Might put inside a useEffect Hook
