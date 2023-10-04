@@ -8,8 +8,7 @@ import { project } from "../../src/types/ProjectType";
 
 
 const Issue = (props: any) => {
-  const [formData, setFormData] = useState({
-  })
+  const [formData, setFormData] = useState({})
   const [projects, setProjects] = useState<project[]>([]);
   const [users, setUsers] = useState<any>([]);
   const [edit, setEdit] = useState(true);
@@ -17,20 +16,13 @@ const Issue = (props: any) => {
   const id = url[url.length-1]
 
   const [issue, setIssue] = useState<any>([]);
+  
   const pullIssue = (id: string) => {
     fetchIssue(id)
-    .then(res => {setIssue(res.data);
-      setFormData({
-        title: res.data.title,
-        description: res.data.description,
-        status: res.data.status,
-        priority: res.data.priority,
-        project: res.data.project.name,
-        createdAt: res.data.createdAt,
-        reportedUser: res.data.reportedUser,
-        assignedUser: res.data.assignedUser,
-      })
-    
+    .then(res => {
+      const { title, description, status, priority, project, createdAt, reportedUser, assignedUser } = res.data
+      setIssue(res.data);
+      setFormData({ id, title, description, status, priority, project, createdAt, reportedUser, assignedUser });
     })
   }
   useEffect(() => {
@@ -45,19 +37,33 @@ const Issue = (props: any) => {
   }, [])
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    debugger
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    let { name, value } = e.target;
+
+    if (name === "project") {
+      const project = projects.filter((proj) => proj.name === value);
+      setFormData({
+        ...formData,
+        [name]: project[0],
+      });
+    } else if (name === "assignedUser") {
+      const user = users.filter((user: any) => user.name === value);
+      setFormData({
+        ...formData,
+        [name]: user[0],
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:8000/api/issues/${id}`,
+        `http://localhost:8000/api/issues/${issue._id}`,
         formData
       );
     } catch (err) {
@@ -79,11 +85,22 @@ const Issue = (props: any) => {
                 <fieldset className="fieldset" disabled={edit}>
                   <div>
                     <label htmlFor="issue-title">Issue title</label>
-                    <input id="issue-title" type="text" value={issue.title}/>
+                    <input 
+                      id="issue-title" 
+                      type="text"
+                      name="title"
+                      defaultValue={formData.title}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div>
                     <label htmlFor="description">Description</label>
-                    <textarea id="description" value={issue.description} />
+                    <textarea 
+                      id="description"
+                      name="description"
+                      onChange={handleChange}
+                      defaultValue={formData.description}
+                    />
                   </div>
                   </fieldset>
                   <div>
@@ -93,16 +110,8 @@ const Issue = (props: any) => {
                     <select
                       id="project"
                       name="project"
-                      value={issue.project?.name}
-                      onChange={(e) => {
-                        setNewProject(e.target.value);
-
-                        handleChange(e);
-                        if (e.target.value == "new") {
-                          setShowOption(true);
-                          setFormData({ ...formData, newProject: true });
-                        } else setShowOption(false);
-                      }}
+                      defaultValue={formData.project?.name}
+                      onChange={handleChange}
                     >
                       <option value=""> --Choose a project-- </option>
                       {projects.map((proj) => (
@@ -117,17 +126,9 @@ const Issue = (props: any) => {
                     <label htmlFor="project">Assignee</label>
                     <select
                       id="assignee"
-                      name="assignee"
-                      value={issue.assignedUser?.name}
-                      onChange={(e) => {
-                        setNewProject(e.target.value);
-
-                        handleChange(e);
-                        if (e.target.value == "new") {
-                          setShowOption(true);
-                          setFormData({ ...formData, newProject: true });
-                        } else setShowOption(false);
-                      }}
+                      name="assignedUser"
+                      defaultValue={issue.assignedUser?.name}
+                      onChange={handleChange}
                     >
                       <option value=""> --Choose a project-- </option>
                       {users.map((user) => (
@@ -143,7 +144,8 @@ const Issue = (props: any) => {
                     <select
                       id="status"
                       name="status"
-                      value={issue.status}
+                      defaultValue={issue.status}
+                      onChange={handleChange}
                     >
                         <option value=""> --Choose a status-- </option>
                         <option value="Open">Open</option>
@@ -157,7 +159,8 @@ const Issue = (props: any) => {
                     <select
                       id="priority"
                       name="priority"
-                      value={issue.priority}
+                      defaultValue={issue.priority}
+                      onChange={handleChange}
                     >
                         <option value=""> --Choose a priority-- </option>
                         <option value="Low">Low</option>
@@ -166,16 +169,16 @@ const Issue = (props: any) => {
                         <option value="Critical">Critical</option>
                     </select>
                   </div>
-                </div>
-                  
+                </div>    
               </form>
               <button onClick={() => setEdit(!edit)}>Edit</button>
-                  <div>
-                    <p> Open Date: {new Date(issue.createdAt).toDateString()}</p>
-                  </div>
-                  <div>
-                    <p> Reported User: {issue.reportedUser?.name}</p>
-                  </div>
+              <button onClick={handleSubmit}>Save</button>
+              <div>
+                <p> Open Date: {new Date(issue.createdAt).toDateString()}</p>
+              </div>
+              <div>
+                <p> Reported User: {issue.reportedUser?.name}</p>
+              </div>
              
             </div>
             <div className="issue-comments">

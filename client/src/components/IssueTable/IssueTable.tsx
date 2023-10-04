@@ -42,7 +42,6 @@ const IssueTable: FC = ({ issues }: any) => {
     
   }
   return (
-
     <div className="issues-table">
       <DataTable
         columns={issueColumns}
@@ -51,42 +50,6 @@ const IssueTable: FC = ({ issues }: any) => {
         onRowClick={goToIssue}
       />
       </div>
-    // <div className="issues-table">
-    //   <div className="main-container">
-    //     <div className="table-container">
-    //       <div className="table-row heading">
-    //         <div className="row-item">Issue</div>
-    //         <div className="row-item">ID #</div>
-    //         <div className="row-item">Project</div>
-    //         <div className="row-item">Status</div>
-    //         <div className="row-item">Priority #</div>
-    //         <div className="row-item">Created At</div>
-    //         <div className="row-item">Created By</div>
-    //         <div className="row-item">Assigned To</div>
-    //         <div className="row-item">Action</div>
-    //       </div>
-    //       {issues.map((issue: Issue) => (
-    //         <Link to={`/issues/${issue._id}`} className="table-row" key={issue._id}>
-    //           <div className="row-item">
-    //             <Link to={`/issues/${issue._id.substring(0, 10)}`}>{issue.title}</Link>
-    //           </div>
-    //           <div className="row-item">{issue._id.substring(0, 10)}</div>
-    //           {issue.project ? (
-    //             <div className="row-item">{issue.project.name.substring(0, 10)}</div>
-    //           ) : (
-    //             <div className="row-item">Project XXX</div>
-    //           )}
-    //           <div className={`row-item status-${issue.status.toLowerCase()}`}>{issue.status}</div>
-    //           <div className={`row-item priority-${issue.priority.toLowerCase()}`}>{issue.priority}</div>
-    //           <div className="row-item">{issue.createdAt}</div>
-    //           <div className="row-item">{issue.reportedUser.substring(0, 10)}</div>
-    //           <div className="row-item">{issue.assignedUser}</div>
-    //         </Link>
-    //       ))}
-    //     </div>
-    //   </div>
-    // </div>
-
   );
 };
 

@@ -4,30 +4,11 @@ const router = express.Router();
 import Issue from "../../models/Issue.js";
 import Project from "../../models/Project.js";
 import User from "../../models/User.js";
-
-// Get All Issues
-// router.get("/", async (req, res) => {
-//   try {
-//     const issues = await Issue.find()
-//       // where(user).
-//       // eq(req.user._id).
-//       // populate('users\
-//       // ').
-//       .populate("project")
-//       .exec();
-//     return res.status(200).json(issues);
-//   } catch (err) {
-//     console.log(`${err}`);
-//     return res.status(500).json({ error: err.message }); // need to change status 500 (Internal Server Error) to 400 (Bad Request)
-//   }
-// });
-
+debugger
 // GET ALL ISSUES 2
 router.get("/", async (req, res) => {
   try {
-    
-    const issues = 
-    await Issue.find()
+    const issues = await Issue.find()
     .populate("project")
     .populate("assignedUser")
     .populate("reportedUser")
@@ -116,54 +97,31 @@ router.post("/", async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 });
+debugger
+router.put("/:id", async (req, res) => {
+  debugger
+  const { title, description, status, priority, project, assignedUser} = req.body;
+  debugger;
+  try {
+    const updatedIssue = await Issue.findByIdAndUpdate(
+      req.params.id,
+      { title, description, status, priority, project, assignedUser },
+      { new: true }
+    );
 
+    if (!updatedIssue) {
+      // Handle the case where no document was found with the given ID
+      debugger
+      return res.status(404).json({ error: "Issue not found" });
+    }
 
+    debugger
+    return res.status(200).json({ ...updatedIssue._doc });
+  } catch (err) {
+    console.log(`${err}`);
+    return res.status(500).json({ error: err.message });
+  }
+});
 
-// NEW TEST CREATE ROUTE
-// Create Issue
-// router.post("/create", async (req, res) => {
-//   const { description, status, priority, project, title, reportedUser } =
-//     req.body;
-
-//   try {
-//     const existingProject = await Project.findOne({ name: project });
-//     if (existingProject) {
-//       const newIssue = new Issue({
-//         title,
-//         description,
-//         project: existingProject._id,
-//         reportedUser,
-//         status,
-//         priority,
-//       });
-//       const result = await newIssue.save();
-
-//       existingProject.issues.push(result);
-//       existingProject.save();
-
-//       return res.status(201).json({ ...result._doc });
-//     } else {
-//       const newProject = new Project({ name: project });
-
-//       const newIssue = new Issue({
-//         title,
-//         description,
-//         project: newProject._id,
-//         reportedUser,
-//         status,
-//         priority,
-//       });
-
-//       const result = await newIssue.save();
-//       newProject.issues.push(result);
-
-//       const projectNew = await newProject.save();
-//       return res.status(201).json({ ...result._doc });
-//     }
-//   } catch (err) {
-//     console.log(`${err}`);
-//     return res.status(500).json({ error: err.message });
-//   }
-// });
 
 export default router;
