@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { fetchProject } from '../utils/ProjectsUtils';
 import { getUrl } from '../utils/GetUrl';
-
+import { issueColumns } from '../components/columns/Columns';
+import DataTable from '../components/Table/Table';
 
 const Project = () => {
   const url = window.location.href.split('/')
@@ -22,40 +23,17 @@ const Project = () => {
   return (
     <div>Project
     {project._id ? 
-      <div className="issue-container"> 
-        {/* <h1>Issue title: <span contentEditable="true" onChange={handleChange}> {project.title}</span></h1> */}
-        <p > Description <span contentEditable="true"> {project.description}</span> </p>
-        {/* <p  onClick={handleChange}> Status {issue.status}</p> */}
-        {/* <p> Priority {project.priority}</p> */}
-        <p> Project {project.name}</p>
+      <div className="issues-table"> 
+        <h1> Title: {project.name}</h1>
         <p> Created At {project.createdAt}</p>
-        <ul>Issues: {project.issues.map(issue => (
-
-            <li key={issue._id}>
-              <h3>{issue.title}</h3>
-              <p>Status: {issue.status}</p>
-              <p>Priority: {issue.priority}</p>
-              <p>Created At: {issue.createdAt}</p>
-              <p>Assigned User: {issue.assignedUser?.name}</p>
-              <p>Reported User: {issue.reportedUser?.name}</p>
-            </li>
-
-        ))}
-        </ul> 
-
-        {/* {projects.map((project) => (
-            <div key={project._id} className="projectContainer">
-              <Link
-                to={`/projects/${project._id}`}
-                style={{ textDecoration: "none" }}
-                className="project-link"
-              >
-                {project.name}{" "}
-              </Link>
-            </div>
-          ))} */}
-        {/* <p> Reported User {project.reportedUser}</p> */}
+      <h1>Issues</h1>
+        <DataTable
+          columns={issueColumns}
+          data={project.issues}
+          context="issues"
+        />  
       </div> : <></> }
+      
     </div>
   )
 }

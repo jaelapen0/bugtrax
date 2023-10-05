@@ -49,3 +49,15 @@ export const fetchIssue = async (issue_id: string) => {
     console.log(err);
   }
 };
+
+export const updateIssue = async (issueId: string, formData: any) => {
+
+  try {
+    const res = await axios.put(
+      `http://localhost:8000/api/issues/${issueId}`,
+      formData
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}

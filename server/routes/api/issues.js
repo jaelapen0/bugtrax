@@ -4,7 +4,7 @@ const router = express.Router();
 import Issue from "../../models/Issue.js";
 import Project from "../../models/Project.js";
 import User from "../../models/User.js";
-debugger
+
 // GET ALL ISSUES 2
 router.get("/", async (req, res) => {
   try {
@@ -22,14 +22,13 @@ router.get("/", async (req, res) => {
 // Get Issue by ID
 router.get("/:id", async (req, res) => {
   try {
-
-    debugger
     const issue = await Issue.findOne({_id: req.params.id})
     .populate("project")
     .populate("assignedUser")
     .populate("reportedUser")
     .exec();
     debugger
+
     return res.status(200).json(issue);
   } catch (err) {
     console.log(`${err}`);

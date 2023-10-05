@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, useEffect, FC, FormEvent } from "react";
 import axios from "axios";
 import { fetchProjects } from "../../utils/ProjectsUtils";
 import { Link, useNavigate, redirect } from "react-router-dom";
-import { project } from "../../types/ProjectType";
+import { project } from "../../types/Type";
 // import { useHistory } from 'react-router-dom';
 
 

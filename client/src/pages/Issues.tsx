@@ -3,14 +3,8 @@ import IssueTable from "../components/IssueTable/IssueTable";
 import axios, { AxiosResponse } from "axios";
 import { AddIssueForm } from "../components/AddIssueForm/AddIssueForm";
 import { fetchAllIssues } from "../utils/IssueUtils";
+import { Issue } from "../types/Type";
 
-type Issue = {
-  title: string;
-  description: string;
-  status: string;
-  priority: string;
-  project: string;
-};
 
 const Issues: FC = () => {
   const [issues, setIssues] = useState<Issue[]>([]);

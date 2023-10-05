@@ -1,21 +1,21 @@
-import React,{ FC, useState, useEffect, useRef } from "react";
-import { fetchIssue } from "../utils/IssueUtils";
+import React,{ FC, useState, useEffect, useRef, useCallback } from "react";
+import { fetchIssue, updateIssue } from "../utils/IssueUtils";
 import { getUsers } from "../utils/UserUtils"
 import '../index.css';
 import axios from "axios";
 import { fetchProjects } from "../utils/ProjectsUtils";
-import { project } from "../../src/types/ProjectType";
+import { project } from "../types/Type";
 
 
-const Issue = (props: any) => {
+const Issue = () => {
   const [formData, setFormData] = useState({})
   const [projects, setProjects] = useState<project[]>([]);
   const [users, setUsers] = useState<any>([]);
   const [edit, setEdit] = useState(true);
+  const [issue, setIssue] = useState<any>([]);
+
   const url = window.location.href.split('/')
   const id = url[url.length-1]
-
-  const [issue, setIssue] = useState<any>([]);
   
   const pullIssue = (id: string) => {
     fetchIssue(id)
@@ -24,9 +24,12 @@ const Issue = (props: any) => {
       setIssue(res.data);
       setFormData({ id, title, description, status, priority, project, createdAt, reportedUser, assignedUser });
     })
+    
   }
+
   useEffect(() => {
     pullIssue(id);
+    
     fetchProjects().then((res) => {
       setProjects(res.data);
     });
@@ -38,7 +41,7 @@ const Issue = (props: any) => {
 
   const handleChange = (e: any) => {
     let { name, value } = e.target;
-
+    debugger
     if (name === "project") {
       const project = projects.filter((proj) => proj.name === value);
       setFormData({
@@ -57,23 +60,18 @@ const Issue = (props: any) => {
         [name]: value,
       });
     }
+    debugger
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await axios.put(
-        `http://localhost:8000/api/issues/${issue._id}`,
-        formData
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    updateIssue(issue._id, formData);
   };
+  
   debugger
   return (
     <div>Issue
-      {issue._id ?    
+      {formData.id ?    
           <div className="issue-container"> 
           <br/>
           <br/>
@@ -110,12 +108,12 @@ const Issue = (props: any) => {
                     <select
                       id="project"
                       name="project"
-                      defaultValue={formData.project?.name}
+                      value={formData.project?.name}
                       onChange={handleChange}
                     >
                       <option value=""> --Choose a project-- </option>
-                      {projects.map((proj) => (
-                        <option id={proj._id} value={proj.name}>
+                      {projects.map(proj => (
+                        <option id={proj._id} value={proj.name} key={proj._id}>
                           {proj.name}
                         </option>
                       ))}
@@ -123,16 +121,16 @@ const Issue = (props: any) => {
                    </div>
 
                    <div>
-                    <label htmlFor="project">Assignee</label>
+                    <label htmlFor="assignee">Assignee</label>
                     <select
                       id="assignee"
                       name="assignedUser"
-                      defaultValue={issue.assignedUser?.name}
+                      value={formData.assignedUser?.name}
                       onChange={handleChange}
                     >
                       <option value=""> --Choose a project-- </option>
-                      {users.map((user) => (
-                        <option id={user._id} value={user.name}>
+                      {users.map(user => (
+                        <option id={user._id} value={user.name} key={user._id}>
                           {user.name}
                         </option>
                       ))}
