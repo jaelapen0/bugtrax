@@ -1,46 +1,72 @@
-import React,{ FC, useState, useEffect, useRef, useCallback } from "react";
+import React,{ FC, useState, useEffect, useRef, useCallback, ChangeEvent } from "react";
 import { fetchIssue, updateIssue } from "../utils/IssueUtils";
 import { getUsers } from "../utils/UserUtils"
 import '../index.css';
-import axios from "axios";
 import { fetchProjects } from "../utils/ProjectsUtils";
-import { project } from "../types/Type";
+import { Project, User} from "../types/Type";
+import { useParams } from "react-router-dom";
 
+type UrlParams = {
+  id: string;
+};
 
-const Issue = () => {
-  const [formData, setFormData] = useState({})
-  const [projects, setProjects] = useState<project[]>([]);
-  const [users, setUsers] = useState<any>([]);
+interface FormData {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  priority: string;
+  project: Project | null;
+  createdAt: string;
+  reportedUser: User | null;
+  assignedUser: User | null;
+}
+
+const Issue = () : JSX.Element => {
+  
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [edit, setEdit] = useState(true);
   const [issue, setIssue] = useState<any>([]);
+  const initialFormData: FormData = {
+    id: "",
+    title: "",
+    description: "",
+    status: "",
+    priority: "",
+    project: null, // You need to define an initial value for Project and User
+    createdAt: "",
+    reportedUser: null,
+    assignedUser: null,
+  };
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const {id} = useParams<UrlParams>();
 
-  const url = window.location.href.split('/')
-  const id = url[url.length-1]
-  
   const pullIssue = (id: string) => {
     fetchIssue(id)
     .then(res => {
-      const { title, description, status, priority, project, createdAt, reportedUser, assignedUser } = res.data
-      setIssue(res.data);
+      const { title, description, status, priority, project, createdAt, reportedUser, assignedUser } = res?.data
+      setIssue(res?.data);
       setFormData({ id, title, description, status, priority, project, createdAt, reportedUser, assignedUser });
     })
     
   }
 
   useEffect(() => {
-    pullIssue(id);
+    pullIssue(id!);
     
     fetchProjects().then((res) => {
-      setProjects(res.data);
+      setProjects(res!.data);
     });
 
     getUsers().then((res) => {
-      setUsers(res.data);
+      setUsers(res!.data);
     });
   }, [])
 
-  const handleChange = (e: any) => {
-    let { name, value } = e.target;
+  const handleChange = async (e: React.ChangeEvent<HTMLElement>) => {
+    const target = e.target as HTMLTextAreaElement | HTMLInputElement;
+    let { name, value } = target;
     debugger
     if (name === "project") {
       const project = projects.filter((proj) => proj.name === value);
@@ -49,7 +75,7 @@ const Issue = () => {
         [name]: project[0],
       });
     } else if (name === "assignedUser") {
-      const user = users.filter((user: any) => user.name === value);
+      const user = users.filter((user) => user.name === value);
       setFormData({
         ...formData,
         [name]: user[0],
@@ -63,7 +89,7 @@ const Issue = () => {
     debugger
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     updateIssue(issue._id, formData);
   };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Table.css';
 
@@ -13,9 +13,10 @@ interface DataTableProps {
   data: any[];
   columns: Column[];
   context: 'issues' | 'projects';
+  size: 'small' | 'medium' | 'large';
 }
 
-const DataTable: React.FC<DataTableProps> = ({ data, columns, context }) => {
+const DataTable: React.FC<DataTableProps> = ({ data, columns, context, size }) => {
 
 
   const [sortedData, setSortedData] = useState(data);
@@ -24,23 +25,12 @@ const DataTable: React.FC<DataTableProps> = ({ data, columns, context }) => {
     direction: 'asc',
   });
 
-  const sortData = (key: string) => {
-    let direction = 'asc';
-    if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    const sorted = [...sortedData].sort((a, b) => {
-      if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
-      if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
-      return 0;
-    });
-    setSortedData(sorted);
-    setSortConfig({ key, direction });
-  };
+  useEffect(() => {
 
-  debugger;
+  },[data]);
+  
   return (
-    <div className="issues-table">
+    <div className={"issues-table-" + size}>
       <div className="main-container">
         <div className="table-container">
           <div className="table-row heading">
@@ -48,7 +38,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, columns, context }) => {
               <div
               className={`row-item ${sortConfig.key === column.field ? `sorted ${sortConfig.direction}` : ''}`}
               key={index}
-              onClick={() => sortData(column.field)}
+              // onClick={() => sortData(column.field)}
             >
               {column.label}
             </div>

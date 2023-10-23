@@ -52,30 +52,31 @@ const Navbar = (): JSX.Element => {
               Issues
             </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              to={"/login"}
-              style={{ textDecoration: "none" }}
-              className="nav-link"
-            >
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to={"/register"}
-              style={{ textDecoration: "none" }}
-              className="nav-link"
-            >
-              Register
-            </Link>
-          </li>
           {authContext?.user ? (
             <li className="nav-item">
               <button onClick={logout}>Log Out</button>
             </li>
           ) : (
-            <></>
+            <div>
+              <li className="nav-item">
+              <Link
+                to={"/login"}
+                style={{ textDecoration: "none" }}
+                className="nav-link"
+              >
+                Login
+              </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to={"/register"}
+                  style={{ textDecoration: "none" }}
+                  className="nav-link"
+                >
+                  Register
+                </Link>
+              </li>
+            </div>
           )}
         </ul>
         {/* </div> */}

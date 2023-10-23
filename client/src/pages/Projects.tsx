@@ -1,17 +1,15 @@
 import React, { FC, useState, useEffect } from "react";
-import IssueTable from "../components/IssueTable/IssueTable";
-import axios, { AxiosResponse } from "axios";
-import { AddIssueForm } from "../components/AddIssueForm/AddIssueForm";
 import { fetchProjects } from '../utils/ProjectsUtils';
 import DataTable from "../components/Table/Table";
 import { projectColumns } from "../components/columns/Columns";
+import { Project } from "../types/Type";
 
-const Projects = () => {
-  const [projects, setProjects] = useState<any[]>([]);
+const Projects = () : JSX.Element => {
+  const [projects, setProjects] = useState<Project[]>([]);
   useEffect(() => {
     fetchProjects()
-    .then((res ) => {
-      setProjects(res.data);
+    .then((res) => {
+      setProjects(res!.data);
     });
   }, []);
 
@@ -25,6 +23,7 @@ const Projects = () => {
           columns={projectColumns}
           data={projects}
           context="projects"
+          size="large"
         />
       </div>
 

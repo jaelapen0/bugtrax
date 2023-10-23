@@ -59,6 +59,7 @@ const Dashboard: FC = () => {
         columns={issueColumns}
         data={myReportedIssues}
         context="issues"
+        size="small"
       />
       </div>
       <div className="my-issues"> Assigned Issues </div>
@@ -66,6 +67,7 @@ const Dashboard: FC = () => {
         columns={issueColumns}
         data={myAssignedIssues}
         context="issues"
+        size="small"
       />
       <div className="my-projects">
         {" "}

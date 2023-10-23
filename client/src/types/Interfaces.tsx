@@ -9,6 +9,10 @@ export interface Issue {
     name: string;
   };
   createdAt: string;
-  reportedUser: string;
-  assignedUser: string;
+  reportedUser: {
+    name: string;
+  };
+  assignedUser: {
+    name: string;
+  };
 };

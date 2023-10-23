@@ -40,7 +40,12 @@ router.get("/:id", async (req, res) => {
 router.get("/:user_id/assignedIssues", async (req, res) => {
   const { user_id } = req.params;
   try {
-    const assignedIssues = await Issue.where("assignedUser").equals(user_id);
+    const assignedIssues = 
+    await Issue.where("assignedUser").equals(user_id)
+    .populate("project")
+    .populate("assignedUser")
+    .populate("reportedUser")
+    .exec();
     return res.status(200).json(assignedIssues);
   } catch (err) {
     console.log(`${err}`);

@@ -2,14 +2,14 @@ import React, { useState, ChangeEvent, useEffect, FC, FormEvent } from "react";
 import axios from "axios";
 import { fetchProjects } from "../../utils/ProjectsUtils";
 import { Link, useNavigate, redirect } from "react-router-dom";
-import { project } from "../../types/Type";
+import { Project } from "../../types/Type";
 // import { useHistory } from 'react-router-dom';
 
 
 export const AddIssueForm: FC = () => {
   // GET CURRENT USER's ID - Might put inside a useEffect Hook
   const loggedInUserString = localStorage.getItem("currentUser");
-  const reportingUser = JSON.parse(loggedInUserString);
+  const reportingUser = JSON.parse(loggedInUserString!);
   const navigate = useNavigate();
 
   // CREATE ISSUE FORMDATA
@@ -24,7 +24,7 @@ export const AddIssueForm: FC = () => {
   });
 
   // ALL EXISTING PROJECTS ARRAY
-  const [projects, setProjects] = useState<project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [formVisible, setFormVisibility] = useState(false);
   // NEW PROJECT STATE
   const [newProject, setNewProject] = useState<unknown>("");
@@ -63,7 +63,7 @@ export const AddIssueForm: FC = () => {
   // FETCHING THE CURRENTLY EXISTING PROJECTS VIA useEffect HOOK
   useEffect(() => {
     fetchProjects().then((res) => {
-      setProjects(res.data);
+      setProjects(res!.data);
     });
   }, []);
 

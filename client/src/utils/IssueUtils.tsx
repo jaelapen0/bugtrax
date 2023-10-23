@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getIssues = async (routeName: String) => {
+export const getIssues = async (routeName: string) => {
   try {
     let user_id = JSON.parse(localStorage.currentUser)._id
     const res = await axios.get(`http://localhost:8000/api/issues/${user_id}/${routeName}`, {

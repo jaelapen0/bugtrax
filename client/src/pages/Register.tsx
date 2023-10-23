@@ -6,19 +6,19 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import axios from "axios";
+
 import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
 interface RegisterFormData {
-  name?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
-const Register: FC<RegisterFormData> = () => {
-  const [formData, setFormData] = useState({
+const Register: React.FC = () => {
+  const [formData, setFormData] = useState<RegisterFormData>({
     name: "",
     email: "",
     password: "",

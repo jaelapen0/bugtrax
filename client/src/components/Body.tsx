@@ -1,6 +1,5 @@
 import React, { ReactNode, FC } from "react";
-import Navbar from "./Navbar/Navbar";
-
+import Navbar from "./navbar/Navbar";
 type BodyProps = {
   children: ReactNode;
 };
@@ -10,7 +9,9 @@ const Body: FC<BodyProps> = ({ children }) => {
     <div className="app">
       <Navbar />
       <main className="container">{children}</main>
-      <div></div>
+      <div>
+        
+      </div>
     </div>
   );
 };
